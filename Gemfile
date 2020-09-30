@@ -10,4 +10,3 @@ end
 gemspec
 
 
-gem "workers", "~> 0.6.1"

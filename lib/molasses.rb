@@ -51,6 +51,25 @@ module Molasses
       end
     end
 
+    def stop
+      @timer.cancel
+    end
+
+    def experiment_success(key, additional_details={}, user=nil)
+      if !@initialized || !@send_events || user == nil || user.include?("id")
+          return false
+      end
+      feature = @feature_cache[key]
+      result = is_active(feature, user)
+      send_event({
+          "event"=> "experiment_success",
+          "tags"=> user["params"].merge(additional_details),
+          "userId"=> user["id"],
+          "featureId"=> feature["id"],
+          "featureName"=> key,
+          "testType"=> result ? "experiment" : "control"
+      })
+    end
     private
 
     def user_active(feature, user)
@@ -143,21 +162,7 @@ module Molasses
         return false
       end
     end
-    def experiment_success(key, additional_details={}, user=nil)
-      if !@initialized || !@send_events || user == nil || user.include?("id")
-          return false
-      end
-      feature = @feature_cache[key]
-      result = is_active(feature, user)
-      send_event({
-          "event"=> "experiment_success",
-          "tags"=> user["params"].merge(additional_details),
-          "userId"=> user["id"],
-          "featureId"=> feature["id"],
-          "featureName"=> key,
-          "testType"=> result ? "experiment" : "control"
-      })
-    end
+
     def send_event(event_options)
       @conn.post('analytics', event_options.to_json)
     end
