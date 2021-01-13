@@ -231,7 +231,7 @@ RSpec.describe Molasses::Client do
   let(:conn)   { Faraday.new { |b| b.adapter(:test, stubs) } }
   let(:client) { Molasses::Client.new("test_api_key", false) }
   it "can do basic molasses" do
-    stub_request(:get, 'https://us-central1-molasses-36bff.cloudfunctions.net/get-features').
+    stub_request(:get, 'https://sdk.molasses.app/v1/features').
       to_return(body:responseA.to_json, headers:  {
         'Content-Type'=>'application/json',
         },)
@@ -245,7 +245,7 @@ RSpec.describe Molasses::Client do
                       "isBetaUser"=>"true"}})).to be_truthy
   end
   it "can do advanced molasses" do
-    stub_request(:get, 'https://us-central1-molasses-36bff.cloudfunctions.net/get-features').
+    stub_request(:get, 'https://sdk.molasses.app/v1/features').
       to_return(body:responseB.to_json, headers:  {
         'Content-Type'=>'application/json',
         },)
@@ -261,7 +261,7 @@ RSpec.describe Molasses::Client do
                               "isBetaUser"=>"true"}})).to be_truthy
   end
   it "can do even more advanced molasses" do
-    stub_request(:get, 'https://us-central1-molasses-36bff.cloudfunctions.net/get-features').
+    stub_request(:get, 'https://sdk.molasses.app/v1/features').
       to_return(body:responseC.to_json, headers:  {
         'Content-Type'=>'application/json',
         },)

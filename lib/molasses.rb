@@ -10,7 +10,7 @@ module Molasses
       if base_url != ""
         @base_url = base_url
       else
-        @base_url = 'https://us-central1-molasses-36bff.cloudfunctions.net'
+        @base_url = 'https://sdk.molasses.app/v1'
       end
       @conn = Faraday.new(
         url: @base_url,
@@ -168,7 +168,7 @@ module Molasses
     end
 
     def fetch_features()
-      response = @conn.get('get-features')
+      response = @conn.get('features')
       if response.status == 200
         data = JSON.parse(response.body)
         if data.include?("data") and data["data"].include?("features")
