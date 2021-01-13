@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'molasses'
-  s.version     = '0.1.1'
+  s.version     = '0.2.0'
   s.licenses    = ['MIT']
   s.summary     = "Ruby SDK for Molasses. Feature flags as a service"
   s.description = "Ruby SDK for Molasses. Feature flags as a service"
