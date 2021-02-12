@@ -28,10 +28,12 @@ client = Molasses::Client.new("test_api_key")
 
 ```
 
-If you decide not to track analytics events (experiment started, experiment success) you can turn them off by setting the `send_events` field to `false`
+If you decide you want to auto track experiments being viewed (experiment started events) you can turn that on by setting the `:auto_send_events` field to `true`
 
 ```go
-client = Molasses::Client.new("test_api_key", false)
+client = Molasses::Client.new("test_api_key", {
+  :auto_send_events => true
+})
 
 ```
 
@@ -56,20 +58,48 @@ You can check if a feature is active for a user who is anonymous by just calling
 client.is_active("TEST_FEATURE_FOR_USER")
 ```
 
-### Experiments
+### Tracking and Experiments
 
-To track whether an experiment was successful you can call `experiment_success`. experiment_success takes the feature's name, any additional parameters for the event and the user.
+To track any analytics event you can call `track`. experiment_success takes the event's name,the user, and any additional parameters for the event.
 
 ```ruby
-client.experiment_success("GOOGLE_SSO",{
-		"version": "v2.3.0"
-	},{
+client.track("Button Clicked", {
    "id"=>"foo",
    "params"=>{
      "isBetaUser"=>"false",
      "isScaredUser"=>"false"
     }
- })
+ }, {
+		"version": "v2.3.0"
+	},)
+```
+
+To track whether an experiment was started you can call `experiment_started`. experiment_started takes the feature's name,the user, and any additional parameters for the event.
+
+```ruby
+client.experiment_started("GOOGLE_SSO", {
+   "id"=>"foo",
+   "params"=>{
+     "isBetaUser"=>"false",
+     "isScaredUser"=>"false"
+    }
+ }, {
+		"version": "v2.3.0"
+	},)
+```
+
+To track whether an experiment was successful you can call `experiment_success`. experiment_success takes the feature's name,the user, and any additional parameters for the event.
+
+```ruby
+client.experiment_success("GOOGLE_SSO", {
+   "id"=>"foo",
+   "params"=>{
+     "isBetaUser"=>"false",
+     "isScaredUser"=>"false"
+    }
+ }, {
+		"version": "v2.3.0"
+	},)
 ```
 
 ## Example
