@@ -166,6 +166,65 @@ responseC = {
         ],
       },
       {
+        "id": "4",
+        "active": true,
+        "description": "bar",
+        "key": "semver",
+        "segments": [
+          {
+            "percentage": 100,
+            "segmentType": "alwaysExperiment",
+            "constraint": "any",
+            "userConstraints": [
+              {
+                "userParam": "lt",
+                "userParamType": "semver",
+                "operator": "lt",
+                "values": "1.2.0",
+              },
+              {
+                "userParam": "lte",
+                "userParamType": "semver",
+                "operator": "lte",
+                "values": "1.2.0",
+              },
+              {
+                "userParam": "gt",
+                "userParamType": "semver",
+                "operator": "gt",
+                "values": "1.2.0",
+              },
+              {
+                "userParam": "gte",
+                "userParamType": "semver",
+                "operator": "gte",
+                "values": "1.2.0",
+              },
+              {
+                "userParam": "equals",
+                "userParamType": "semver",
+                "operator": "equals",
+                "values": "1.2.0",
+              },
+              {
+                "userParam": "doesNotEqual",
+                "userParamType": "semver",
+                "operator": "doesNotEqual",
+                "values": "1.2.0",
+              },
+
+            ],
+
+          },
+          {
+            "constraint": "all",
+            "percentage": 0,
+            "segmentType": "everyoneElse",
+            "userConstraints": [],
+          },
+        ],
+      },
+      {
         "id": "1",
         "active": true,
         "description": "foo",
@@ -369,6 +428,104 @@ RSpec.describe Molasses::Client do
         "doesNotEqual" => false,
         "equalsBool" => true,
         "doesNotEqualBool" => "true",
+      },
+    })).to be_falsy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "lt" => "1.1",
+      },
+    })).to be_truthy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "lt" => "1.2.0",
+      },
+    })).to be_falsy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "gt" => "1.3.0",
+      },
+    })).to be_truthy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "gt" => "1.2.0",
+      },
+    })).to be_falsy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "lte" => "1.1",
+      },
+    })).to be_truthy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "lte" => "1.2.0",
+      },
+    })).to be_truthy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "lte" => "1.3.0",
+      },
+    })).to be_falsy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "gte" => "1.3.0",
+      },
+    })).to be_truthy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "gte" => "1.2.0",
+      },
+    })).to be_truthy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "gte" => "0.1.0",
+      },
+    })).to be_falsy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "equals" => "1.2.0",
+      },
+    })).to be_truthy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "equals" => "1.3.0",
+      },
+    })).to be_falsy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "doesNotEqual" => "1.3.0",
+      },
+    })).to be_truthy
+
+    expect(client.is_active("semver", {
+      "id" => "123444", # valid crc32 percentage
+      "params" => {
+        "doesNotEqual" => "1.2.0",
       },
     })).to be_falsy
 

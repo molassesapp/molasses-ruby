@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    molasses (0.2.0)
+    molasses (0.3.0)
       faraday (~> 1.0)
       workers (~> 0.6.1)
 
