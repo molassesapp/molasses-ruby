@@ -3,6 +3,7 @@ require "workers"
 require "faraday"
 require "json"
 require "zlib"
+require "semantic"
 
 module Molasses
   class Client
@@ -212,6 +213,9 @@ module Molasses
       when "boolean"
         user_value = parse_bool(user_value)
         constraint_value = parse_bool(constraint_value)
+      when "semver"
+        user_value = Semantic.parse_version(user_value)
+        constraint_value = Semantic.parse_version(constraint_value)
       else
         user_value = user_value.to_s
       end
