@@ -214,8 +214,8 @@ module Molasses
         user_value = parse_bool(user_value)
         constraint_value = parse_bool(constraint_value)
       when "semver"
-        user_value = Semantic.parse_version(user_value)
-        constraint_value = Semantic.parse_version(constraint_value)
+        user_value = Semantic::Version.new user_value
+        constraint_value = Semantic::Version.new constraint_value
       else
         user_value = user_value.to_s
       end

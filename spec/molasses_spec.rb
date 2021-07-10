@@ -434,7 +434,7 @@ RSpec.describe Molasses::Client do
     expect(client.is_active("semver", {
       "id" => "123444", # valid crc32 percentage
       "params" => {
-        "lt" => "1.1",
+        "lt" => "1.1.0",
       },
     })).to be_truthy
 
@@ -462,7 +462,7 @@ RSpec.describe Molasses::Client do
     expect(client.is_active("semver", {
       "id" => "123444", # valid crc32 percentage
       "params" => {
-        "lte" => "1.1",
+        "lte" => "1.1.0",
       },
     })).to be_truthy
 
